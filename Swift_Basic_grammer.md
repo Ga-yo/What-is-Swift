@@ -1,5 +1,4 @@
 <h2>Swift Basic grammar</h2>
-
 1. 이름 짓기
 
    Function, method, variable constant 등은 소문자로
@@ -246,5 +245,194 @@
       }
       ```
 
-      
+12. 반복문
 
+    - for-in구문
+
+      ```swift
+      for integer in integers{
+      	print(integer)
+      }
+      ```
+
+      (dictionary일 때)
+
+      ```swift
+      for (name, age) in people{//튜플타입
+      	print("\(name): \(age)")
+      }
+      ```
+
+    - while
+
+      ```swift
+      while integers.count>1{
+      	integers.removeLast()
+      }
+      ```
+
+    - Repeat-while(do-while과 비슷)
+
+      ```swift
+      repeat{
+      	integers.removeLast()
+      }while integers.count>0
+      ```
+
+13. 옵셔널
+
+    :값이 있을수도 있고, 없을 수도 있음
+
+     nil이 할당 될 수 있는지 없는지 표현
+
+    - 필요성
+
+      1) nil의 가능성을 코드만으로 표현가능
+
+      2) 문서/주석 작성 시간 절약
+
+      3) 해당 변수에 값이 없을 것 같을 때 사용가능
+
+    - Optional 타입
+
+    ```swift
+    let shortFrom: Int? = Int("42")
+    let longFrom: Optional<Int> = Int("42")
+    ```
+
+      - optional.none == nil
+
+      - Optional.some == wrapped value
+
+        ```swift
+        let number: Int? = Optional.some(42)
+        let noNumber: Int? = Optional.none
+        print(noNumber == nil)//true
+        ```
+
+    - 표현 <!>, 표현 <?>
+
+14. 옵셔널 추출: 옵셔널에 들어있는 값을 사용하기 위해 꺼내오는 것
+
+    - Optional Binding = nil 체크 + 안전한 값 추출
+
+      If-let 
+
+      ```swift
+      if let name: String = myName {
+          printName(name)
+      } else {
+          print("myName == nil")
+      }
+      ```
+
+    - Force Unwrapping = 옵셔널의 값을 강제로 추출
+
+      ```swift
+      var myName: String? = "gayo"
+      printName(myName!)
+      myName=nil//오류
+      ```
+
+15. 구조체
+
+    = 값(value) 타입
+
+    ```swift
+    struct Sample {
+        // 가변 프로퍼티(값 변경 가능)
+        var mutableProperty: Int = 100 
+        
+        // 불변 프로퍼티(값 변경 불가능)
+        let immutableProperty: Int = 100 
+        
+        // 타입 프로퍼티(static 키워드 사용 : 타입 자체가 사용하는 프로퍼티)
+        static var typeProperty: Int = 100 
+        
+        // 인스턴스 메서드(인스턴스가 사용하는 메서드)
+        func instanceMethod() {
+            print("instance method")
+        }
+        
+        // 타입 메서드(static 키워드 사용 : 타입 자체가 사용하는 메서드)
+        static func typeMethod() {
+            print("type method")
+        }
+    }
+    ```
+
+16. 클래스
+
+    - 참조 타입
+    - Swift의 클래스는 다중 상속이 되지 않음
+
+    ```swift
+    class 이름{
+    	구현부
+    }
+    ```
+
+    - 타입 메서드
+
+      1. ```swift
+         static func typeMethod() {
+         	print("type method - static")
+         }
+         ```
+
+      2. ```swift
+         class func classMethod() {
+         	print("type method - class")
+         }
+         ```
+
+17. 열거형
+
+    ```swift
+    enum 이름{
+    	case 이름1
+    	case 이름2
+    	case 이름3, 이름4, 이름5
+    }
+    ```
+
+18. 클래스 vs 구조체/열거형
+
+    - Class
+      - 전통적인 OOP 관점에서의 클래스
+      - 단일 상속
+      - 메서드
+      - 프로퍼티
+      - 참초타입
+    - Struct
+      - C언어 등의 구조체보다 다양한 기능
+      - 상속 불가
+      - 메서드
+      - 프로퍼티
+      - 값 타입
+    - Enum
+      - 다른 언어의 열거형과는 많이 다른 존재
+      - 상속 불가
+      - 메서드
+      - 연산 프로퍼티
+      - 값 타입
+
+19. 클로저(closer)
+
+    - 클로저가 뭐야?
+
+      -> 실행가능한 코드 블럭
+
+      ​	 함수와 다르게 이름정의는 필요하지는 않지만, 매개변수 전달과 반환 값이 존재 할 수 있다는 점이 동일
+
+      ​	함수는 이름이 있는 클로저
+
+      - 정의
+
+        ```swift
+        { (매개변수 목록) -> 반환타입 in
+        	실행코드
+        }
+        ```
+
+        
