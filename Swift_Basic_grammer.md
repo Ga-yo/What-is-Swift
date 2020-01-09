@@ -417,7 +417,7 @@
       - 연산 프로퍼티
       - 값 타입
 
-19. 클로저(closer)
+19. 클로저
 
     - 클로저가 뭐야?
 
@@ -435,4 +435,219 @@
         }
         ```
 
+      - 사용
+
+        ```swift
+        let sum: (Int, Int) -> Int={ (a: Int, b: Int) in
+        return a+b
+        }
+        ```
+
+      - 후행 클로저
+
+        -> 함수의 매개변수 마지막으로 전달되는 클로저
+
+      - 반환타입 생략
+
+      - 단축 인자 이름
+
+      - 축약된 전달인자 이름도 사용 가능
+
+      - 암시적 반환 표현
+
+20. 프로퍼티
+
+    - 인스턴스 저장 프로퍼티
+
+      ```swift
+      var name: String=""
+      var 'class': String="Swift"
+      var koreanAge: Int=0
+      ```
+
+    - 인스턴스 연산 프로퍼티
+
+      ```swift
+      var westernAge: Int{
+      	get{
+      		return koreanAge -1
+      	}
         
+        set(inputValue) {
+          koreanAge=inputValue+1	
+        }
+      }
+      ```
+
+    - 타입 저장 프로퍼티
+
+      ```swift
+      static var typeDescription: String = "학생"
+      ```
+
+    - 타입 연산 프로퍼티
+
+      ```swift
+      static var selfIntroduction: String {
+              return "학생타입입니다"
+          }
+      }
+      ```
+
+21. 프로퍼티 감시자
+
+    : 프로퍼티의 값이 변경될 때 원하는 동작을 수행할 수 있음
+
+    - 값이 변경되기 직전에 willSet 블럭 호출
+      - 암시적 매개변수 newValue
+    - 값이 변경된 직후에 didSet 블럭 호출
+      - 암시적 매개변수 oldValue
+
+22. 상속
+
+    : 단일 상속으로 다중 상속을 지원하지 않음
+
+    ```swift
+    class Student: Person{
+    
+    }
+    ```
+
+23. 인스턴스
+
+    - 생성
+
+      1. 초기값
+
+      ```swift
+      class PersonA {
+          // 모든 저장 프로퍼티에 기본값 할당
+          var name: String = "unknown"
+          var age: Int = 0
+          var nickName: String = "nick"
+      }
+      ```
+
+      2. 이니셜라이저
+
+      ```swift
+      init(name: String, age: Int, nickName: String) {
+              self.name = name
+              self.age = age
+              self.nickName = nickName
+          }
+      ```
+
+      3. 초기값이 필요없을 때 = __옵셔널__
+
+    - 소멸
+
+      1. 디이니셜라이저
+         - deinit은 클래스의 인스턴스가 메모리에서 해제되는 시점에 호출
+         - 자동으로 호출
+         - 클래스 타입에서만
+
+      ```swift
+          deinit {
+              if let petName = pet?.name {
+                  print("\(name)가 \(child.name)에게 \(petName)를 인도합니다")
+                  self.pet?.owner = child
+              }
+      ```
+
+24. 옵셔널 체이닝
+
+    : 또 다시 옵셔널이 연속적으로 연결되는 경우 유용하게 사용할 수 있음
+
+    ```swift
+    func guardJobWithOptionalChaining(owner: Person?) {
+        if let guardJob = owner?.home?.guard?.job {
+            print("우리집 경비원의 직업은 \(guardJob)입니다")
+        } else {
+            print("우리집 경비원은 직업이 없어요")
+        }
+    }
+    
+    ```
+
+25. nil 병합 연산자
+
+    ```swift
+    guardJob=yagom?.home?.guard?.job ?? "슈퍼맨"
+    //앞에 갑이 nil이면 뒤에 있는 것으로 반환해라
+    ```
+
+26. 타입 캐스팅
+
+    - 인스턴스의 타입을 확인하는 용도
+    - Is, as
+
+    ```swift
+    var result: Bool
+    
+    result = yagom is Person 
+    ```
+
+    - 업 캐스팅
+
+      : as를 사용하여 부모클래스의 인스턴스로 사용할 수 있도록
+
+      컴파일러에게 타입정보를 전환해줌
+
+    - 다운 캐스팅
+
+      : as?(조건부 다운 캐스팅) 와 as!(강제 다운 캐스팅) 로 자식 클래스의 인스터스로 사용할 수 있도록 컴파일러에게 타입정보를 전환해줌 
+
+27. assert
+
+    - Assertion
+
+      디버깅모드에서만 동작
+
+      assert 함수 사용
+
+      ```swift
+      assert(someInt == 0, "someInt != 0")
+      //맞으면 넘어가고 틀리면 출력
+      ```
+
+28. guard
+
+    - guard(Early Exit)
+
+      특정 실행구문을 빠르게 종료
+
+      ```swift
+      func someFunction(info: [String: Any]) {
+          guard let name = info["name"] as? String else {
+              return
+          }
+      ```
+
+29. 프로토콜
+
+    : 특정 역할을 수행하기 위한 메서드, 프로퍼티, 이니셜라이저 등의 요구사항을 정의함
+
+    - 정의
+
+      ```swift
+      protocol 프로토콜 이름{
+       
+      }
+      _항상 var 키워드 사용__다중상속 가능_
+      ```
+
+30. 익스텐션
+
+    : 구조체, 클래스, 열거형, 프로토콜 타입에 새로운 기능을 추가할 수 있는 기능
+
+    - 정의
+
+      ```swift
+      extension 확장할 타입 이름{
+       
+      }
+      ```
+
+      
+
