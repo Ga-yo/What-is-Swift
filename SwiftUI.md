@@ -61,4 +61,21 @@
   .frame(width:11, height:30)
   ```
 
-- 
+- 문자정렬
+
+  ```swift
+  textalignment = .right(.left .center)
+  ```
+
+<h2>Mystoryboard
+
+- 글자색&배경색
+
+  : textColor 프로퍼티, backgroundColor 프로퍼티
+
+  ```swift
+    myLabel4.textColor=UIColor.black
+              myLabel4.backgroundColor=UIColor.white
+  ```
+
+  
