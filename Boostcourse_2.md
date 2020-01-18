@@ -239,6 +239,116 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
    - 서브뷰의 레이아웃이 변경된 후 호출
    - 서브뷰의 레이아웃을 변경 한 후 추가적인 작업하기 good
 
-### 중요
+#### 중요
 
 __뷰 컨트롤러에서 위 메서드를 사용하기 위해 아래와 같이 override 키워드를 명시하고 super를 호출하기!!__
+
+###	Delegation
+
+: [명사] 대표(자), 사절, 위임, 대리(자)
+
+- 델리게이션 디자인 패턴
+
+  : 하나의 객체가 다른 객체를 대신해 동작 또는 조정할 수 있는 기능
+
+  __사용자 인터페이스 제어에 관련된 권한 위임__
+
+- 데이터 소스
+
+  : 델리게이트와 매우 비슷한 역할
+
+  __데이터를 제어하는 기능을 위임__
+
+- 프로토콜
+
+  : 코코아터치에서 프로토콜을 사용해 델리게이션과 데이터 소스 구현할 수 있음
+
+### 싱글턴(Singleton)
+
+: 특정 클래스의 인스턴스가 오직 하나임을 보장하는 객체
+
+- Cocoa 프레임워크에서의 싱글턴 디자인 패턴
+  1. FileManager
+     - 애플리케이션 파일 시스템을 관리
+     - _FileManager.default_
+  2. URLSession
+     - URL 세션을 관리
+     - _URLSession.shared_
+  3. NotificationCenter
+     - 등록된 알림의 정보를 사용할 수 있게
+     - _NotificationCenter.default_
+  4. UserDefaults
+     - Key-Value 형태로 간단한 데이터를 저장하고 관리할 수 있는 인터페이스 제공
+     - _UserDefaults.standard_
+  5. UIApplication
+     - iOS에서 실행되는 중앙제어 애플리케이션 객체
+     - UIApplication
+
+### StackView
+
+1. 스토리보드에서 스택뷰를 캔버스에 추가
+
+2. 버튼을 스택뷰 안에 추가
+
+   = 스택뷰에 버튼이 추가됨
+
+3. 더 많은 버튼이 있으면  __Spacing__으로 간격을 조정
+
+- 주요 프로퍼티
+
+  ```swift
+  var arrangeedSubviews: [UIView]
+  //정렬된 뷰의 배열
+  var axis: UILayoutConstrainAxis:
+  //레이아웃의 방향 (수직 vertical, 수평 horizontal)
+  var distribution: UIStackViewDistribution: 
+  //어떻게 배치(분배)될지 결정
+  var spacing: CGFloat:
+  //간격 조정
+  ```
+
+- 주요 메서드
+
+  ```swift
+  func addArrangeSubview(UIView): arrangedSubviews
+  //배열에 마지막 요소에 뷰를 추가함
+  func insertArrangedSubview(UIView, at: Int): arrangedSubviews
+  //배열의 특정 인덱스에 뷰를 추가함
+  func removeArrangedSubview(UIView):
+  //스택 뷰의 arrangedSubviews 배열로부터 뷰를 제거함
+  ```
+
+  ### Target-Action 디자인 패턴
+  
+  1. For 객체 : 이벤트가 발생할 때 다른 객체에 메시지를 보내는 데 필요한 정보 포함
+  2. For 액션 : 특정 이벤트가 발생했을 때 호출할 메서드
+  
+  - 컨트롤 이벤트
+    1. touchDown - 컨트롤을 터치했을 때
+    2. touchDownRepeat - 컨트롤을 연속 터치할 때
+    3. touchDragInside - 컨트롤 범위 내에서 터치한 영역을 드래그할 때
+    4. touchDragOutside - 터치 영역이 컨트롤의 바깥쪽에서 드래그할 때
+    5. touchDragEnter - 터치 영역 바깥쪽으로 나갔다가 다시 들어올 때
+    6. touchDragExit - 터치 영역 바깥쪽으로 나갔을 때
+    7. touchUpInside - 컨트롤 영역 안쪽에서 터치 후 뗐을 때
+    8. touchUpOutside - 컨트롤 영역 안쪽에서 터치 후 밖에서 뗐을 때
+    9. touchCancel - 터치를 취소하는
+    10. valueChanged - 드래그 및 다른 방법으로 조작하여 값이 변경됐을 때
+    11. primaryAction Triggered - 버튼이 눌릴 때
+    12. editingDidBegin - `UITextField`에서 편집이 시작될 때 호출되는 이벤트
+    13. editingChanged - `UITextField`에서 값이 바뀔 때마다 호출되는 이벤트
+    14. editingDidEnd - `UITextField`에서 외부객체와의 상호작용으로 인해 편집이 종료되었을 때 발생하는 이벤트
+    15. editingDidEndOnExit -  `UITextField` 의 편집상태에서 키보드의 'return'을 눌렀을 때
+    16. allTouchEvents
+    17. allEditingEvents - `UITextField`에서 편집작업의 이벤트
+    18. applicationReserved
+    19. systemReserved
+    20. allEvents
+
+### Gesture Recognizer
+
+: 제스처 인식기, 특정 제스처 이벤트가 일어날 때마다 각 타깃에 맞는 액션 메세지를 보내어 처리
+
+- __UIGestureRecognizer__
+
+  
