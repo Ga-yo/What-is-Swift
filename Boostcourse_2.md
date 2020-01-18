@@ -349,6 +349,54 @@ __뷰 컨트롤러에서 위 메서드를 사용하기 위해 아래와 같이 o
 
 : 제스처 인식기, 특정 제스처 이벤트가 일어날 때마다 각 타깃에 맞는 액션 메세지를 보내어 처리
 
-- __UIGestureRecognizer__
+- __UIGestureRecognizer__ class
 
-  
+  - 하위 클래스
+
+    1. UITapGestureRecognizer : 싱글탭 또는 멀티탭 제스처
+    2. UIPinchGestureRecognizer : 핀치 제스처
+    3. UIRotationGestureRecognizer : 회전 제스처
+    4. UISwipeGestureRecognizer : 드래그 제스처
+    5. UIScreenEdgePanGestureRecognizer : 화면 가장자리 드래그 제스처
+    6. UILongPressGestureRecognizer : 롱프레스 제스처
+
+    *** 타킷-액션 연결 설정 후 addGestureReognizer 메서드를 통해 뷰에 연결!! ***
+
+    ```swift
+    @IBAction func myActionMethod()
+    @IBAction func myActionMethod(_ sender: UIGestureRecognizer)
+    ```
+
+  - 주요 메서드
+
+    ```swift
+    init(target: Any?, action: Selector?) 
+    //타깃-액션 연결을 통해 초기화
+    func location(in: UIView?)->CGPoit
+    //제스처가 발생한 좌표 반환
+    func addTarget(Any?, action: Selector?)
+    //제스처 인식기 객체에 타깃과 액션 추가
+    func removeTarget(Any?, action: selector?) 
+    //제스처 인식기 객체로부터 타깃과 액션 제거
+    func require(toFail: UIGestureRecognizer)
+    //제스처 인식기가 여러 개일 때 의존성 설정
+    ```
+
+  - 주요 프로퍼티
+
+    ```swift
+    var state: UIGestureRecognizerState
+    //현재 제스처 인식기의 상태
+    var view: UIView? 
+    //제스처 인식기가 연결된 뷰
+    var isEnabled: Bool 
+    //제스처 인식기가 사용 가능한 상태인지
+    var cancelsTouchInView
+    //제스처가 인식되었을 때 터치 이벤트가 뷰로 전달되는 여부에 영향을 미침
+    var delaysTouchesBegan
+    //began 단게에서 제스처 인식기가 추가된 뷰에 터치의 전달 지연 여부 결정
+    var delaysTouchesEnded
+    //end 단계에서 제스처 인식기가 추가된 뷰에 터치 전달 지연 여부를 결정
+    ```
+
+    
