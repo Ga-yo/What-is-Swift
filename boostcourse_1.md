@@ -229,5 +229,165 @@
      func setThumbImage(UIImage?, for: UIControlState)
      ```
 
-6. 
+   <h4>AVFoundation</h4>
 
+   - Apple 플랫폼에서 사운드 및 영상 미디어의 처리, 제어, 가져오기 및 내보내기를 하는 프레임워크입니다.
+
+   <h4>AVAudioPlayer Class</h4>
+
+   - 주요 기능
+     - 사운드 재생
+     - 길이의 제한 없이 사운드 재생
+     - 여러 개 동시 재생
+     - 속도 제어
+     - 파일의 특정 지점 찾기
+     - 현재 재생 정보 데이터 업기
+     - 사운드 반복재생 기능
+   - 주요 프로퍼티
+     - Var isPlaying: Bool
+     - var volume: Float
+     - var rate: Float
+     - var numberOfLoops: Int
+     - var duration: TimeInterval
+     - Var currentTime: TimeInterval
+     - Protocol AVAudioPlayerDelegate
+
+<h4>Cocoa Touch</h4>
+
+- 코코아 터치 프레임워크
+
+<h4>UIKit</h4>
+
+- 앱 개발시 사용자에게 보여질 화면을 구성하고 사용자 액션에 대응에 관련된 다양한 요소를 포함한다.
+
+<h4>Foundation</h4>
+
+- 코코아 터치 프레임워크에 포함된 프레임워크이다.
+- 데이터 타입, 날짜 및 시간 계산, 필터 및 정렬, 네트워킹 등 기본 기능 제공
+
+<h4>오토 레이아웃?</h4>
+
+- 속성?
+
+  : 모든 요소들은 <code>NSLayoutAttributes</code> enum타입에 정의되어 있다. 그리고 <code>translatesAutoresizingMaskIntoConstraints</code> 값을 _false_로 바꿔야 한다.
+
+1. 앵커를 사용하기
+
+   - <code>NSLayoutAnchor</code> 는 제한요소를 만들기 위한 유틸리티 클래스로 다양한 제약 요소들을 생성할 수 있다.
+
+     ```swift
+     let margins = view.layoutMarginsGuide
+     myView.leadingAnchor.constraint(equalTo:margins.leadingAnchor).active=true
+     myView.trailingAnchor.constraint(equalTo:margins.trainlingAnchor).active=true
+     //좌우를 기본 레이아웃 마진을 사용하여 부모 뷰에 딱 고정시킴
+     myView.heightAnchor.constraint(equalTo:myView.widthAnchor, multiplier: 2.0)
+     //높이를 가로의 2배로 사용
+     ```
+
+     
+
+- 하나의 사이즈였던 기종들이 점차 시기가 변화하며 다양한 사이즈와 화면 비율로 출시되었기 때문에 이에 구애 받지 않고 시각적으로 동일한 화면을 구현해야할 때 권장되는 방법
+
+  - 외부 변경
+
+    -> 슈퍼뷰의 크기나 모양이 변경될 때
+
+  - 내부변경
+
+    -> 애플리케이션 변경에 의해 콘텐츠가 보여질 때, 국제화 지원, 동적 타입 지원 등...
+
+    
+
+    ![스크린샷 2020-01-14 오후 3.41.04](/Users/igayeong/Library/Application Support/typora-user-images/스크린샷 2020-01-14 오후 3.41.04.png)
+
+|    정의    |             뜻             |
+| :--------: | :------------------------: |
+|   width    |       사각형의 너비        |
+|   height   |       사각형의 높이        |
+|   bottom   |       사각형의 하단        |
+|  baseline  |       텍스트의 하단        |
+| horizontal |            수평            |
+|  vertical  |            수직            |
+|  leading   | 텍스트를 읽을 때 시작 방향 |
+|  trailing  |  텍스트를 읽을 때 끝 방향  |
+|  centerX   |         수평 중심          |
+|  centerY   |         수직 중심          |
+|            |                            |
+
++ 안전 영역(safe area)
+
+  - 상태바, 내비게이션 바, 툴 바, 탭 바를 가리는 것을 방지하는 영역
+
+    +. margins
+
++ 제약(constraint)
+
+  - 뷰와 뷰 사이의 관계
+
+  - ![스크린샷 2020-01-14 오후 3.56.56](/Users/igayeong/Library/Application Support/typora-user-images/스크린샷 2020-01-14 오후 3.56.56.png)
+
+    | 정의       | 뜻                                      |
+    | ---------- | --------------------------------------- |
+    | item1      | 뷰 또는 레이아웃                        |
+    | Attribute  | 첫번째 아이템에 대한 속성               |
+    | Multiplier | 속성 2에 곱해지는 값                    |
+    | Item2      | 두번째 아이템                           |
+    | Attribute  | 두번째 아이템에 대한 속성               |
+    | Constant   | 두번째 아이템의 속성에 더해지는 상수 값 |
+    |            |                                         |
+
+  - 고유 콘텐츠 크기
+
+  - 제약 우선도
+
+  - 레이아웃 마진
+
+  - 앵커
+
+  - Layout Anchor - 앵커와 관련된 프로퍼티
+
+  ```swift
+  var constraints: [NSLayoutConstraint]
+  // 뷰에 부여한 제약사항들은 담은 배열
+  
+  var bottomAnchor: NSLayoutYAxisAnchor { get }
+  // 뷰 프레임의 하단부 레이아웃 앵커
+  
+  var centerXAnchor: NSLayoutXAxisAnchor { get }
+  // 뷰 프레임의 수평 중심부 레이아웃 앵커
+  
+  var centerYAnchor: NSLayoutYAxisAnchor { get }
+  // 뷰 프레임의 수직 중심부 레이아웃 앵커
+  
+  var heightAnchor: NSLayoutDimension { get }
+  // 뷰 프레임의 높이를 가리키는 레이아웃 앵커
+  
+  var leadingAnchor: NSLayoutXAxisAnchor { get }
+  // 뷰 프레임의 리딩을 가리키는 레이아웃 앵커
+  
+  var topAnchor: NSLayoutYAxisAnchor { get }
+  // 뷰 프레임의 상단부 레이아웃 앵커
+  
+  var trailingAnchor: NSLayoutXAxisAnchor { get }
+  // 뷰 프레임의 트레일링을 가리키는 레이아웃 앵커
+  
+  var widthAnchor: NSLayoutDimension { get }
+  // 뷰 프레임의 넓이를 가리키는 레이아웃 앵커
+  ```
+
+<h4>
+  디자인 패턴
+</h4>
+
+- 종류
+
+  |       이름       | 목적 | 범위         | 설명                                                         |
+  | :--------------: | ---- | ------------ | ------------------------------------------------------------ |
+  |   싱글턴 패턴    | 생성 | 객체         | 객체의 생성에 관련된 패턴으로 특정 클래스의 인스턴스가 오직 하나임을 보장하고 이 인스턴스에 접근할 방법을 제공한다. |
+  |   퍼사드 패턴    | 구조 | 객체         | 하위 객체들을 사용할 수 있도록 하는 역할을 한다. 서브 시스템을 구조화하고 접근을 하나의 퍼사드 객체로 제공한다. |
+  |   옵저버 패턴    | 행위 | 객체         | 상태 변화를 관찰하는 관찰자들, 상태 변화가 있을 때마다 메서드 등을 통해 옵저버에게 통지하도록 함 |
+  | 스트래티지 패턴. | 행위 | 객체         | 알고리즘을 담당하는 각각의 클래스를 만들어 책임을 분산하기 위한 목적으로 만든 행위 패턴 |
+  |   팩토리 패턴    | 생성 | 클래스       | 어떤 클래스의 인스턴스를 생성할지에 대한 결정은 하위클래스에서 이루어지도록 책임을 떠넘긴다 |
+  |   어댑터 패턴    | 구조 | 클래스, 객체 | 클래스의 인터페이스를 사용자가 기대하는 다른 인터페이스로 변환하는 패턴으로, 호환성이 없는 인터페이스 때문에 함께 동작할 수 없는 클래스들이 함께 동작하도록 해준다. |
+
+  
