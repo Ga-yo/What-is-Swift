@@ -7,3 +7,16 @@ SWIFT 프로그래밍 (저자 : 야곰) 책을 토대로 정리해 놓은 폴더
 
 <h4>Boostcourse</h4> 
 boostcourse를 따라서 배운 내용들을 정리해 놓은 폴더
+
+#### While_developing
+
+개발을 하는 동안 새로 알게된 것들을 정리해놓았다.
+
+###### 	
+
+> 참고
+>
+> todobox는 https://hyesunzzang.tistory.com/67?category=626591
+>
+> alramApp은 https://moonibot.tistory.com/25
+
