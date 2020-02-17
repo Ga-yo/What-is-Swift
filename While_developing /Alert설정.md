@@ -34,4 +34,14 @@
 
 3. Alert틀에 액션버튼 연결해주기
 
+   ```swift
+   alert.addAction(defaultAction)
+   ```
+
 4. Alert view 화면에 뜨게 만들기
+
+   ```swift
+   present(alert. animated: bool, completion: nil)
+   ```
+
+   
