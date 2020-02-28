@@ -136,3 +136,64 @@ HTTP/HTTPS 를 통해 콘텐츠를 주고받는 API를 제공하는 클래스이
    - state() - 작업의 상태 나타내기
    - Priority() - 우선순위
 
+-----
+
+#### ATS
+
+: 애플리케이션과 웹 서비스 사이에 통신 𓂻𓂭 보안 향상을 위한 기능으로 모든 인터넷 통신 𓂻𓂭 안전한 프로토콜을 사용하도록 보장하는 것으로 사용자의 민감한 정보가 유출되는 것을 방지
+
+1. ATS 동작
+   - URLSession, CFURL 그리고 NSURLConnection API를 이용해 데이터를 주고받을 때 ATS 기능을 기본적으로 사용
+   - ATS 동작 시에는 HTTP 통신을 할 수 없으며 애플에서 권장하는 요구 사항을 충족하지 않은 네트워크는 연결에 실패할 수 있다.
+     - 서버는 TLS 프로토콜 버전 1.2 이상을 지원
+     - 2048비트 이상의 RSA 키 또는 256비트 이상의 ECC 키가 있는 SHA256을 인증서에 사용
+     - 암호 연결은 허용된 암호 목록으로 제한한다
+
+2. 용어 정리
+
+   - 전송 계층 보안
+
+     : 암호 프로토콜이다. 서버와 클라이언트 애플리케이션이 네트워크로 통신하는 과정에서 도청, 간섭, 위조를 방지하기 위해서 설계됨
+
+   - HTTPS 
+
+     : TLS를 사용해 암호화된 연결을 하는 HTTP를 HTTPS라고 함
+
+3. 예외 사항
+
+   - 애플리케이션이 ATS가 요구하는 사항을 충족하기 힘든 경우 비활성화 가능
+
+     - AVFoundation 프레임워크를 통한 스트리밍 서비스
+     - Webkit을 통한 콘텐츠 요청
+     - 로컬 네트워크 연결
+     - etc..
+
+   - ATS 비활성화 방법(info.plist에서 설정)
+
+     - 모든 HTTP 통신 허용
+
+     ```swift
+     <key>NSAppTransportSecurity</key>
+     <dict>
+     	<key>NSAllowsArbitraryLoads</key>
+     <true/>
+     </dict>
+     ```
+
+     - ATS에서 제외할 특정 도메인 지정
+
+     ```swift
+      <key>NSAppTransportSecurity</key>
+      <dict>
+          <key>NSExceptionDomains</key>
+          <dict>
+              <key>www.abc.com</key>
+              <dict>
+             <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                  <true/>
+              </dict>
+          </dict>
+      </dict>
+     ```
+
+     
