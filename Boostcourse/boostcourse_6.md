@@ -196,4 +196,145 @@ HTTP/HTTPS 를 통해 콘텐츠를 주고받는 API를 제공하는 클래스이
       </dict>
      ```
 
-     
+----
+
+#### Grand Central Dispath(GCD)
+
+: 멀티코어와 멀티 프로세싱 환경에서 최적화된 프로그래밍을 할 수 있도록 애플이 개발한 기술. 스레드 풀의 관리를 프로그래머가 아닌 운영체제에서 관리하기 때문에 프로그래머가 테스크를 비동기적으로 쉽게 사용할 수 있음
+
+1. 디스패치 대기열(__Dispatch Queue__)
+
+   : 먼저 들어오면 먼저 나가는 순서로 실행. 
+
+   - Serial Dispatch : 한 번에 하나의 작업만을 실행
+   - Concurrent Dispatch : 이미 시작된 작업이 완료될 때까지 기다리지 않고 가능한 많은 작업을 진행
+
+2. 디스패치 소스(__Dispatch Source__)
+
+   : 특정 유형의 𓂻𓂭스템 이벤트를 비동기적으로 처리하기 위한 C 기반 메커니즘. 이벤트에 대해 캡슐화하고, 특정 클로저 또는 디스패치 대기열에 전달
+
+3. 연산 대기열(__Operation Queue__)
+
+   : Concurrent Dispatch와 동일하게 동작하며 Operation Queue 클래스에 의해 구현. 
+
+   - GCD와의 차이점
+     - Operation Queue에서는 동시에 실행할 수 있는 연산의 최대 수를 지정할 수 있음
+     - Operation Queue에서는 KVO(key value observing)을 사용할 수 있는 많은 프로퍼티들이 있음
+     - Operation Queue에서는 연산을 일시 중지, 다시 시작 및 취소 가능
+   - 언제 사용할까?
+     - Operation Queue 비동기적으로 실행할 때
+     - GCD 작업이 간단하게 처리하거나 특정 유형의 시스템 이벤트를 비동기적으로 처리할 때 적합
+
+4. 대기열
+
+   - 유형
+
+     - Serial : 등록한 순서대로
+     - Concurrent : 실행 중인 작업이 끝나기를 기다리지 않고 대기열에 있는 작업을 동𓂻𓂭에 별도의 스레드를 사용하여 실행
+
+   - 주요 프로퍼티
+
+     ```swift
+     class var main: DispatchQueue{get} // 반환
+     ```
+
+     ```swift
+     var label:String{get} // 대기열 식별
+     ```
+
+     ```swift
+     var qos:Dispatcho5{get} // 우선순위 옵션 제공
+     ```
+
+   - 주요 메서드
+
+     ```swift
+     func sync(execute block: () -> Void) // 클로저를 대기열에 추가하고 완료될 때까지 대기
+     ```
+
+     ```swift
+     func async(execute workItem: DispatchWorkItem) // 비동기 실행을 위해 클로저를 추가하고 즉시 실행
+     ```
+
+     ```swift
+     func asyncAfter(deadline: DispatchTime, execute: DispatchWorkItem) //지정된 시간에 실행하기 위해 클로저를 추가
+     ```
+
+     ```swift
+     class func global(qos: DispatchQoS.QoSClass = default) -> DispatchQueue // 글로벌 대기열을 반환
+     ```
+
+-----
+
+#### Notification
+
+: 등록된 노티피케이션에 노티피케이션 센터를 통해 정보를 전달하기 위한 구조체
+
+- 주요 프로퍼티
+
+  ```swift
+  var name: Notification.Name //알림 식별
+  ```
+
+  ```swift
+  var object: Any? // 발송자 객체를 전달
+  ```
+
+  ```swift
+  var userInfo: [AnyHashable: Any]? //노티피케이션과 관련된 값 또는 객체의 저장소
+  ```
+
+-------
+
+#### Notification Center
+
+: 등록된 옵저버에게 동𓂻𓂭에 노티피케이션을 전달하는 클래스. 
+
+- 기본 노티피케이션 센터 얻기
+
+  ```swift
+  class var default: NotificationCenter{get}
+  ```
+
+- 옵저버 추가 및 제거
+
+  ```swift
+  func addObserver(forName name: NSNotification.Name?, object obj: Any?,queue: OperationQueue?,using block: @escaping (Notification) -> Void) -> NSObjectProtocol
+  ```
+
+  : 대기열과 대기열에 추가할 클록을 가리키는 장소에 이름을 추가
+
+  ```swift
+   func addObserver(_ observer: Any,selector aSelector: Selector,name aName: NSNotification.Name?,object anObject: Any?)
+  ```
+
+  : 노티피케이션을 노티피케이션 센터의 메서드를 가리키는 장소에 이름을 추가
+
+  ```swift
+  func removeObserver(_ observer: Any,name aName: NSNotification.Name?,object anObject: Any?)
+  ```
+
+  : 노티피케이션 센터의 메서드를 가리키는 장소에서 일치하는 이름 제거
+
+  ```swift
+  func removeObserver(_ observer: Any)
+  ```
+
+  : 모든 이름 제거
+
+- 발송
+
+  ```swift
+  func post(_notification: Notification)
+  ```
+
+  ```swift
+  func post(name aName: NSNotification.Name, object anObject: Any?, userInfo aUserInfo: [AnyHashable: Any]? = nil)
+  ```
+
+  ```swift
+  func post(name aName: NSNotification.Name, object anObject: Any?)
+  ```
+
+  
+
