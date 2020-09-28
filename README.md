@@ -14,9 +14,5 @@ boostcourse를 따라서 배운 내용들을 정리해 놓은 폴더
 
 ###### 	
 
-> 참고
->
-> todobox는 https://hyesunzzang.tistory.com/67?category=626591
->
-> alramApp은 https://moonibot.tistory.com/25
+
 
