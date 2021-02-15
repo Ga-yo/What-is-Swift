@@ -231,3 +231,82 @@ class City {
 
 Country의 capitalCity는 초기화 단계에서 City 클래스에 초기화 된 후 사용되게 된다. 즉 실제로 Country의 capitalCity는 옵셔널이 되어야한다. **하지만 여기서는 느낌표 연산자(!)를 이용해 명시적으로 강제 언래핑을 시켰다**. 암시적 언래핑이 돼서 Country에서 name을 초기화하는 시점에 self를 사용할 수 있게된다. 그리고 City에서는 강한 참조 순환을 피하기 위해 미소유 참조로 country를 선언해서 두 인스턴스를 문제없이 사용할 수 있다
 
+
+
+#### 클로저에서의 강한 참조 순환
+
+클로저에서는 self를 캡쳐하기 때문에 강한 참조 순환이 발생할 수도 있다. 그런경우 클로저 캡쳐 리스트를 사용한다
+
+```swift
+class HTMLElemnet {
+	let name: String
+  let text: String
+  lazy var asHTML: () -> String = { //클로저 사용
+    if let text = self.text { //self 캡쳐!
+      return "\(self.name)text"
+    }else {
+      return "\(self.name)"
+    }
+  }
+  init(name: String, text: String? = nil) {
+    self.name = name
+    self.text = text
+  }
+  deinit {
+    print("deinit")
+  }
+}
+
+var paragraph: HTMLElement? = HTMLElement(name: "p", text: " hello world")
+print(paragraph!.asHTML())
+//paragraph가 옵셔널로 선언되어서 nil을 할당할 수 있지만 강한 순환 참조로 nil을 할당하더라도 해당 인스턴스는 해제되지 않는다
+```
+
+
+
+##### 해결!
+
+클로저에서 캡쳐 참조에 강한 참조 대신 약한 참조 혹은 미소유 참조를 지정할 수 있다 하지만 약한 참조인가 미소유 참조인가를 정할 땐 코드에서 상호 관계에 달려있다
+
+1. 캡쳐리스트 정의
+
+   ```swift
+   lazy var someClosure: (Int, String) -> String = {
+     [unowned self, weak delegate = self.delegate!] in
+   }
+   ```
+
+2. 약한 참조와 미소유 참조
+
+   - 참조가 먼저 해제되는 경우 = 약한 참조
+   - 같은 시점이나 나중 시점에 해제되는 경우 = 미소유 참조 (캡쳐리스트가 절대 nil이 될 수 없다면 그것은 반드시 약한 참조가 아닌 미소유 참조로 캡쳐돼야함)
+
+   ```swift
+   class HTMLElemnet {
+   	let name: String
+     let text: String
+     lazy var asHTML: () -> String = {
+           [unowned self] in
+           if let text = self.text {
+               return "<\(self.name)>\(text)</\(self.name)>"
+           } else {
+               return "<\(self.name) />"
+           }
+       }
+     init(name: String, text: String? = nil) {
+       self.name = name
+       self.text = text
+     }
+     deinit {
+       print("deinit")
+     }
+   }
+   
+   var paragraph: HTMLElement? = HTMLElement(name: "p", text: " hello world")
+   print(paragraph!.asHTML())
+   
+   paragraph = nil //메모리에서 해제됨!
+   ```
+
+   
+
